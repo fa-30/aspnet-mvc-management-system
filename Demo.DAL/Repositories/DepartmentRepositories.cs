@@ -7,7 +7,7 @@ using Demo.DAL.Data.Contexts;
 
 namespace Demo.DAL.Repositories
 {
-    class DepartmentRepository(ApplicationDbContext _dbContext) : IDepartmentRepository
+    public class DepartmentRepository(ApplicationDbContext _dbContext) : IDepartmentRepository
     {
         //public readonly ApplicationDbContext dbContext = DbContext;
 

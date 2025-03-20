@@ -1,7 +1,7 @@
 ﻿
 namespace Demo.DAL.Repositories
 {
-    internal interface IDepartmentRepository
+    public interface IDepartmentRepository
     {
         int Add(Department department);
         IEnumerable<Department> GetAll(bool WithTracking = false);
