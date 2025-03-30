@@ -1,16 +1,13 @@
-﻿@model CreatedDepartmentDto
+﻿
+@model DepartmentEditViewModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <div class="row justify-content-center align-content-center mt-3">
-    <h1 class="col-8 my-4">Create Department</h1>
-
-    <form class="col-8" method="post" asp-controller="Department" asp-action="Create">
-        <div asp-validation-summary="ModelOnly" class="text-danger" ></div>
+    <h1 class="col-8 my-4">Edit Department</h1>
+    <form method="post" asp-controller="Department" asp-action="Edit" class="col-8">
         <div class="form-group mb-3">
-            @* <label class="form-label" for="Code"></label> *@  
-            @* <input id="Code" name="Code" type="text" /> *@  
             <label class="form-label" asp-for="Code"></label>
             <input asp-for="Code" class="form-control" />
             <span asp-validation-for="Code" class="text-danger"></span>
@@ -22,18 +19,15 @@
         </div>
         <div class="form-group mb-3">
             <label class="form-label" asp-for="Description"></label>
-             <textarea class="form-control" asp-for="Description"></textarea>
+            <textarea class="form-control" asp-for="Description"></textarea>
         </div>
         <div class="form-group mb-3">
             <label class="form-label" asp-for="DateOfCreation"></label>
-            <input type="date" asp-for="DateOfCreation" class="form-control" />
+            <input asp-for="DateOfCreation" class="form-control" />
         </div>
-
-
         <div class="mt-4 m-auto">
-            <input class="btn btn-primary" type="submit" value="Create" />
-            <a class="btn btn-outline-dark" asp-action="Index">Back to list</a>
+            <input class="btn btn-success" type="submit" value="Save" />
+            <a asp-controller="Departments" asp-action="Index" class="btn btn-outline-dark">Back to list</a>
         </div>
-
     </form>
 </div>
