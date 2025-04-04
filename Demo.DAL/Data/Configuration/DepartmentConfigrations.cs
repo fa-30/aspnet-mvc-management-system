@@ -1,4 +1,6 @@
 ﻿
+using Demo.DAL.Models.DepartmentModel;
+
 namespace Demo.DAL.Data.Configuration
 {
     internal class DepartmentConfigurations : IEntityTypeConfiguration<Department>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Demo.DAL.Data.Contexts;
+using Demo.DAL.Models.DepartmentModel;
 
 namespace Demo.DAL.Repositories
 {

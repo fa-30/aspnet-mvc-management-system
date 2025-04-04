@@ -1,4 +1,6 @@
 ﻿
+using Demo.DAL.Models.DepartmentModel;
+
 namespace Demo.DAL.Repositories
 {
     public interface IDepartmentRepository
