@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Demo.DAL.Models.EmployeeModel;
 using Demo.DAL.Models.Shared.Enums;
 using Microsoft.Extensions.Hosting;
+using Demo.BLL.DTO.DepartmentDtos;
+using Demo.Presentation.ViewModels.DepartmentViewModel;
 
 namespace Demo.Presentation.Controllers
 {
@@ -18,12 +20,25 @@ namespace Demo.Presentation.Controllers
         public IActionResult Create() => View();
 
         [HttpPost]
-        public IActionResult Create(CreatedEmployeeDto employeeDto)
+        public IActionResult Create(UpdatedEmployeeDto employee)
         {
             if (ModelState.IsValid) // Server Side Validation
             {
                 try
                 {
+                    var employeeDto = new CreatedEmployeeDto()
+                    {
+                        Name = employee.Name,
+                        Salary = employee.Salary,
+                        Address = employee.Address,
+                        Age = employee.Age,
+                        Email = employee.Email,
+                        PhoneNumber = employee.PhoneNumber,
+                        IsActive = employee.IsActive,
+                        HiringDate = employee.HiringDate,
+                        Gender = employee.Gender,
+                        EmployeeType = employee.EmployeeType,
+                    };
                     int Result = _employeeService.CreateEmployee(employeeDto);
                     if (Result > 0)
                         return RedirectToAction(actionName: nameof(Index));
@@ -40,7 +55,7 @@ namespace Demo.Presentation.Controllers
                         _logger.LogError(ex.Message);
                 }
             }
-            return View(model: employeeDto);
+            return View(employee);
         }
 
         #region Details Of Employee
