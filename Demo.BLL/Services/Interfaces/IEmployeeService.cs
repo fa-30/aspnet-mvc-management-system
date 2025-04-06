@@ -7,9 +7,9 @@ using Demo.BLL.DTO.EmployeeDtos;
 
 namespace Demo.BLL.Services.Interfaces
 {
-    internal interface IEmployeeService
+    public interface IEmployeeService
     {
-        IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking);
+        IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking= false);
 
         EmployeeDetailsDto GetEmployeebyId(int id);
 

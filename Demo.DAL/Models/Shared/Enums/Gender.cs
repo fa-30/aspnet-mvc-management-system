@@ -10,6 +10,7 @@ namespace Demo.DAL.Models.Shared.Enums
     {
         Female=1,
         Male=2,
+        None=3
 
     }
 }
