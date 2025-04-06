@@ -1,8 +1,10 @@
 using Demo.DAL.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
-using Demo.BLL.Services;
 using Demo.DAL.Repositories.classes;
 using Demo.DAL.Repositories.Interfaces;
+using Demo.BLL.Services.classes;
+using Demo.BLL.Services.Interfaces;
+using Demo.BLL.Profiles;
 namespace Demo.Presentation
 {
     public class Program
@@ -22,6 +24,7 @@ namespace Demo.Presentation
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
             
             #endregion
             var app = builder.Build();

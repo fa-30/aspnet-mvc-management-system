@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Demo.BLL.DTO;
+using Demo.BLL.DTO.DepartmentDtos;
 using Demo.BLL.Factories;
+using Demo.BLL.Services.Interfaces;
 using Demo.DAL.Repositories.Interfaces;
 
 
-namespace Demo.BLL.Services
+namespace Demo.BLL.Services.classes
 {
     public class DepartmentService(IDepartmentRepository _departmentRepository) : IDepartmentService
     {
