@@ -5,6 +5,7 @@ using Demo.DAL.Repositories.Interfaces;
 using Demo.BLL.Services.classes;
 using Demo.BLL.Services.Interfaces;
 using Demo.BLL.Profiles;
+using Microsoft.AspNetCore.Mvc;
 namespace Demo.Presentation
 {
     public class Program
@@ -15,7 +16,11 @@ namespace Demo.Presentation
 
 
             #region Add services to the container.
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            }
+                );
             //builder.Services.AddScoped<ApplicationDbContext>();
             builder.Services.AddDbContext<ApplicationDbContext>(Options =>
             { 
