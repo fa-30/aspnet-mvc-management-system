@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.DAL.Models.EmployeeModel
+namespace Demo.DAL.Models.Shared.Enums
 {
-    public enum EmployeeType
+    public enum Gender
     {
-        FullTime = 1 ,
-        partTime = 2 
+        Female=1,
+        Male=2,
+
     }
 }

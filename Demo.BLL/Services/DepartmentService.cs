@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Demo.BLL.DTO;
 using Demo.BLL.Factories;
-using Demo.DAL.Repositories;
+using Demo.DAL.Repositories.Interfaces;
+
 
 namespace Demo.BLL.Services
 {
@@ -35,14 +36,14 @@ namespace Demo.BLL.Services
             if (Department is null) return false;
             else
             {
-                int Result = _departmentRepository.Remove(department: Department);
+                int Result = _departmentRepository.Remove(Department);
                 return Result > 0 ? true : false;
             }
         }
 
         public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
         {
-            return _departmentRepository.update(departmentDto.ToEntity());
+            return _departmentRepository.Update(departmentDto.ToEntity());
         }
     }
 }
