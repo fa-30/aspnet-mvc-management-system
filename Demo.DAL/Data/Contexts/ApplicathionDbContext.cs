@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Demo.DAL.Data.Configuration;
+using Demo.DAL.Models.DepartmentModel;
 
 namespace Demo.DAL.Data.Contexts
 {
@@ -12,7 +13,7 @@ namespace Demo.DAL.Data.Contexts
     {
         
         public DbSet<Department> Departments { get; set; }
-
+        public DbSet<Employee> Employees { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //modelBuilder.ApplyConfiguration<Department>(new DepartmentConfigurations());
