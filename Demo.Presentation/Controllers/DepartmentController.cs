@@ -11,6 +11,8 @@ namespace Demo.Presentation.Controllers
 
         public IActionResult Index()
         {
+            ViewData[index: "Message"] = new DepartmentDto { Name = "TestViewData" };
+            ViewBag.Message = new DepartmentDto() { Name = "TestViewBag" };
             var Department = _departmentService.GetAllDepartments();
             return View(Department);
         }
@@ -36,11 +38,16 @@ namespace Demo.Presentation.Controllers
                         Description = departmentViewModel.Description
                     };
                     int Result = _departmentService.AddDepartment(departmentDto);
-                    if (Result > 0)
-                        // return View(viewName: nameof(Index), _departmentService.GetAllDepartments()); // XXXXXXXX
-                        return RedirectToAction(nameof(Index));
-                    else
-                        ModelState.AddModelError(key: string.Empty, errorMessage: "Department Can't Be Created");
+                    string Message;
+                    if (Result > 0) {
+                        Message = $"Department {departmentViewModel.Name} Is Created Successfully"; }
+                    else 
+                    {
+                        Message = $"Department {departmentViewModel.Name} Can Not Be Created";
+                    }
+
+                    TempData["Message"] = Message;
+                    return RedirectToAction(actionName: nameof(Index));
 
                 }
                 catch (Exception ex)
