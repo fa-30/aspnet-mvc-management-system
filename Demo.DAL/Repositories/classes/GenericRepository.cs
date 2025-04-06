@@ -11,11 +11,16 @@ namespace Demo.DAL.Repositories.classes
         public IEnumerable<TEntity> GetAll(bool withTracking = false)
         {
             if (withTracking)
-                return _dbContext.Set<TEntity>().Where(E=>E.IsDeleted != true).ToList();
+                return _dbContext.Set<TEntity>().ToList();
             else
-                return _dbContext.Set<TEntity>().Where(E => E.IsDeleted != true).AsNoTracking().ToList();
+                return _dbContext.Set<TEntity>().AsNoTracking().ToList();//.Where(E => E.IsDeleted != true).AsNoTracking().ToList();
         }
 
+        public IEnumerable<TResult> GetAll<TResult>(System.Linq.Expressions.Expression<Func<TEntity, TResult>> selector)
+        {
+           return _dbContext.Set<TEntity>().Where(E=>E.IsDeleted != true)
+                .Select(selector).ToList();
+        }
         public int Add(TEntity entity)
         {
             _dbContext.Set<TEntity>().Add(entity);
@@ -33,5 +38,7 @@ namespace Demo.DAL.Repositories.classes
             _dbContext.Set<TEntity>().Update(entity);
             return _dbContext.SaveChanges();
         }
+
+    
     }
 }

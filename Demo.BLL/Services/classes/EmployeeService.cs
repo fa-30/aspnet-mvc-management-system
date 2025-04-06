@@ -17,10 +17,23 @@ namespace Demo.BLL.Services.classes
  
         public IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking = false)
         {
-            var Employees = _employeeRepository.GetAll(withTracking: WithTracking);
-            var employeesDto = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(source: Employees);
+            var employeesDto = _employeeRepository.GetAll(selector: Emp => new EmployeeDto()
+            {
+                Id = Emp.Id,
+                Name = Emp.Name,
+                Age = Emp.Age,
+                Email = Emp.Email,
+                IsActive = Emp.IsActive,
+                Salary = Emp.Salary,
+                EmpType = Emp.EmployeeType.ToString(),
+                EmpGender = Emp.Gender.ToString()
+            });//.Where(predicate: E => E.Age > 25);
+
             return employeesDto;
-        
+            //var Employees = _employeeRepository.GetAll(withTracking: WithTracking);
+            //var employeesDto = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(source: Employees);
+            //return employeesDto;
+
             //var employeesDto = Employees.Select(selector: Emp => new EmployeeDto()
             //{
             //    Id = Emp.Id,
