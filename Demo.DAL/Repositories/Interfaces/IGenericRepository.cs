@@ -16,7 +16,9 @@ namespace Demo.DAL.Repositories.Interfaces
        IEnumerable<TEntity> GetAll(bool withTracking = false);
         
        IEnumerable<TResult> GetAll<TResult>(Expression<Func<TEntity,TResult>> selector);
-       TEntity? GetById(int id);
+
+        IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> Predicate);
+        TEntity? GetById(int id);
        
        int Remove(TEntity entity);
         

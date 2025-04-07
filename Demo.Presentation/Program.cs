@@ -26,7 +26,7 @@ namespace Demo.Presentation
             { 
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 Options.UseLazyLoadingProxies();
-            });
+            },ServiceLifetime.Scoped);
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();

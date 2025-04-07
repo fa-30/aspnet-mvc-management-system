@@ -1,4 +1,5 @@
-﻿using Demo.DAL.Data.Contexts;
+﻿using System.Linq.Expressions;
+using Demo.DAL.Data.Contexts;
 using Demo.DAL.Models.Shared;
 using Demo.DAL.Repositories.Interfaces;
 
@@ -39,6 +40,11 @@ namespace Demo.DAL.Repositories.classes
             return _dbContext.SaveChanges();
         }
 
-    
+        public IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> Predicate)
+        {
+            return _dbContext.Set<TEntity>()
+                             .Where(Predicate)
+                             .ToList();
+        }
     }
 }

@@ -15,7 +15,7 @@ namespace Demo.BLL.Services.classes
     public class EmployeeService(IEmployeeRepository _employeeRepository, IMapper _mapper) : IEmployeeService
     {
  
-        public IEnumerable<EmployeeDto> GetAllEmployees()
+        public IEnumerable<EmployeeDto> GetAllEmployees(string? EmployeeSearchName)
         {
             //var employeesDto = _employeeRepository.GetAll(selector: Emp => new EmployeeDto()
             //{
@@ -30,8 +30,12 @@ namespace Demo.BLL.Services.classes
             //});//.Where(predicate: E => E.Age > 25);
 
             //return employeesDto;
-            var Employees = _employeeRepository.GetAll();
-            var employeesDto = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>( Employees);
+            IEnumerable<Employee> employees;
+            if (string.IsNullOrWhiteSpace(EmployeeSearchName))
+                employees = _employeeRepository.GetAll();
+            else
+                employees = _employeeRepository.GetAll(E => E.Name.ToLower().Contains(EmployeeSearchName.ToLower()));
+            var employeesDto = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(source: employees);
             return employeesDto;
 
 
