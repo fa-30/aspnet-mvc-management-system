@@ -27,12 +27,12 @@ namespace Demo.Presentation
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 Options.UseLazyLoadingProxies();
             },ServiceLifetime.Scoped);
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
-            
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
             #endregion
             var app = builder.Build();
 

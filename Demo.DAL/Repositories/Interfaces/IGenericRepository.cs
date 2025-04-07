@@ -11,7 +11,7 @@ namespace Demo.DAL.Repositories.Interfaces
     public interface IGenericRepository<TEntity> where TEntity : BaseEntity
     {
       
-       int Add(TEntity entity);
+       void Add(TEntity entity);
        
        IEnumerable<TEntity> GetAll(bool withTracking = false);
         
@@ -20,9 +20,9 @@ namespace Demo.DAL.Repositories.Interfaces
         IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> Predicate);
         TEntity? GetById(int id);
        
-       int Remove(TEntity entity);
+       void Remove(TEntity entity);
         
-       int Update(TEntity entity);
+       void Update(TEntity entity);
 
      
     }
