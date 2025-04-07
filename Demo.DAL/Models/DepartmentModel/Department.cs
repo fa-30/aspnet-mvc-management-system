@@ -13,5 +13,7 @@ namespace Demo.DAL.Models.DepartmentModel
 
         public string Code { get; set; } = null!;
         public string? Description { get; set; }
+
+        public virtual ICollection<Employee> employees { get; set; } = new HashSet<Employee>();
     }
 }

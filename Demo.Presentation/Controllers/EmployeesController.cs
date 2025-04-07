@@ -7,20 +7,25 @@ using Demo.DAL.Models.Shared.Enums;
 using Microsoft.Extensions.Hosting;
 using Demo.BLL.DTO.DepartmentDtos;
 using Demo.Presentation.ViewModels.DepartmentViewModel;
+using Demo.Presentation.ViewModels;
 
 namespace Demo.Presentation.Controllers
 {
-    public class EmployeesController(IEmployeeService _employeeService, ILogger<DepartmentController> _logger, IWebHostEnvironment _environment) : Controller
+    public class EmployeesController(IEmployeeService _employeeService, ILogger<DepartmentController> _logger, IWebHostEnvironment _environment ) : Controller
     {
         public IActionResult Index()
         {
             var Employees = _employeeService.GetAllEmployees();
             return View(Employees);
         }
-        public IActionResult Create() => View();
+        public IActionResult Create()//[FromServices] IDepartmentService departmentService)
+        {
+            //ViewData["Departments"] = departmentService.GetAllDepartments();
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult Create(UpdatedEmployeeDto employee)
+        public IActionResult Create(EmployeeViewModel employee)
         {
             if (ModelState.IsValid) // Server Side Validation
             {
@@ -38,6 +43,7 @@ namespace Demo.Presentation.Controllers
                         HiringDate = employee.HiringDate,
                         Gender = employee.Gender,
                         EmployeeType = employee.EmployeeType,
+                        DepartmentId = employee.DepartmentId,
                     };
                     int Result = _employeeService.CreateEmployee(employeeDto);
                     if (Result > 0)
@@ -78,9 +84,9 @@ namespace Demo.Presentation.Controllers
             var employee = _employeeService.GetEmployeebyId(id: id.Value);
             if (employee is null) return NotFound();
 
-            var employeeDto = new UpdatedEmployeeDto()
+            var employeeDto = new EmployeeViewModel()
             {
-                Id = employee.Id,
+
                 Name = employee.Name,
                 Salary = employee.Salary,
                 Address = employee.Address,
@@ -91,18 +97,34 @@ namespace Demo.Presentation.Controllers
                 HiringDate = employee.HiringDate,
                 Gender = Enum.Parse<Gender>(value: employee.Gender),
                 EmployeeType = Enum.Parse<EmployeeType>(value: employee.EmployeeType),
+                DepartmentId = employee.DepartmentId,
             };
             return View(employeeDto);
 
          }
 
         [HttpPost]
-        public IActionResult Edit([FromRoute] int? id, UpdatedEmployeeDto employeeDto)
+        public IActionResult Edit([FromRoute] int? id, EmployeeViewModel employeeViewModel)
         {
-            if (!id.HasValue || id != employeeDto.Id) return BadRequest();
-            if (!ModelState.IsValid) return View(employeeDto);
+            if (!id.HasValue ) return BadRequest();
+            if (!ModelState.IsValid) return View(employeeViewModel);
             try
             {
+                var employeeDto = new UpdatedEmployeeDto()
+                {
+                    Id = id.Value,
+                    Name = employeeViewModel.Name,
+                    Address = employeeViewModel.Address,
+                    Age = employeeViewModel.Age,
+                    Email = employeeViewModel.Email,
+                    EmployeeType = employeeViewModel.EmployeeType,
+                    Gender = employeeViewModel.Gender,
+                    HiringDate = employeeViewModel.HiringDate,
+                    IsActive = employeeViewModel.IsActive,
+                    PhoneNumber = employeeViewModel.PhoneNumber,
+                    Salary = employeeViewModel.Salary,
+                    DepartmentId = employeeViewModel.DepartmentId
+                };
                 var Result = _employeeService.UpdatedEmployee(employeeDto);
                 if (Result > 0)
                 {
@@ -111,7 +133,7 @@ namespace Demo.Presentation.Controllers
                 else
                 {
                     ModelState.AddModelError( string.Empty,  "Employee is not Updated");
-                    return View(employeeDto);
+                    return View(employeeViewModel);
                 }
             }
             catch (Exception ex)
@@ -119,7 +141,7 @@ namespace Demo.Presentation.Controllers
                 if (_environment.IsDevelopment())
                 {
                     ModelState.AddModelError( string.Empty,  ex.Message); 
-                    return View(employeeDto);
+                    return View(employeeViewModel);
                 }
                 else
                 {

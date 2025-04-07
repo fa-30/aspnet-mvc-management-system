@@ -10,6 +10,12 @@ namespace Demo.DAL.Data.Configuration
             builder.Property( D => D.Id).UseIdentityColumn(seed: 10, increment: 10);
             builder.Property( D => D.Name).HasColumnType(typeName: "varchar(20)");
             builder.Property( D => D.Code).HasColumnType(typeName: "varchar(20)");
+
+            builder.HasMany(D=>D.employees)
+                   .WithOne(E=>E.Department)
+                   .HasForeignKey(E=>E.DepartmentId)
+                   .OnDelete(DeleteBehavior.SetNull);
+
             base.Configure(builder);
         }
     }

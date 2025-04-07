@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Demo.DAL.Models.DepartmentModel;
 using Demo.DAL.Models.Shared;
 using Demo.DAL.Models.Shared.Enums;
 
@@ -20,5 +21,8 @@ namespace Demo.DAL.Models.EmployeeModel
         public DateTime HiringDate { get; set; }
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
+
+        public int? DepartmentId { get; set; }
+        public virtual Department? Department { get; set; }
     }
 }

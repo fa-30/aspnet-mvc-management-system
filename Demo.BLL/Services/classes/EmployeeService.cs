@@ -15,24 +15,25 @@ namespace Demo.BLL.Services.classes
     public class EmployeeService(IEmployeeRepository _employeeRepository, IMapper _mapper) : IEmployeeService
     {
  
-        public IEnumerable<EmployeeDto> GetAllEmployees(bool WithTracking = false)
+        public IEnumerable<EmployeeDto> GetAllEmployees()
         {
-            var employeesDto = _employeeRepository.GetAll(selector: Emp => new EmployeeDto()
-            {
-                Id = Emp.Id,
-                Name = Emp.Name,
-                Age = Emp.Age,
-                Email = Emp.Email,
-                IsActive = Emp.IsActive,
-                Salary = Emp.Salary,
-                EmpType = Emp.EmployeeType.ToString(),
-                EmpGender = Emp.Gender.ToString()
-            });//.Where(predicate: E => E.Age > 25);
+            //var employeesDto = _employeeRepository.GetAll(selector: Emp => new EmployeeDto()
+            //{
+            //    Id = Emp.Id,
+            //    Name = Emp.Name,
+            //    Age = Emp.Age,
+            //    Email = Emp.Email,
+            //    IsActive = Emp.IsActive,
+            //    Salary = Emp.Salary,
+            //    EmpType = Emp.EmployeeType.ToString(),
+            //    EmpGender = Emp.Gender.ToString()
+            //});//.Where(predicate: E => E.Age > 25);
 
-            return employeesDto;
-            //var Employees = _employeeRepository.GetAll(withTracking: WithTracking);
-            //var employeesDto = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>(source: Employees);
             //return employeesDto;
+            var Employees = _employeeRepository.GetAll();
+            var employeesDto = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeDto>>( Employees);
+            return employeesDto;
+
 
             //var employeesDto = Employees.Select(selector: Emp => new EmployeeDto()
             //{
