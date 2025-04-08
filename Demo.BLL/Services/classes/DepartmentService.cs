@@ -11,40 +11,45 @@ using Demo.DAL.Repositories.Interfaces;
 
 namespace Demo.BLL.Services.classes
 {
-    public class DepartmentService(IDepartmentRepository _departmentRepository) : IDepartmentService
+    public class DepartmentService(IUnitOfWork _unitOfWork) : IDepartmentService
     {
         public IEnumerable<DepartmentDto> GetAllDepartments()
         {
-            var departments = _departmentRepository.GetAll();
+            var departments = _unitOfWork.DepartmentRepository.GetAll();
             return departments.Select(D => D.ToDepartmentDto());
         }
 
         public DepartmentDetialsDto GetDepartmentById(int id)
         {
-            var department = _departmentRepository.GetById(id);
+            var department = _unitOfWork.DepartmentRepository.GetById(id);
             return department is null ? null : department.ToDepartmentDetialsDto();
 
         }
         public int AddDepartment(CreatedDepartmentDto departmentDto)
         {
             var department = departmentDto.ToEntity();
-            return _departmentRepository.Add(department);
+            _unitOfWork.DepartmentRepository.Add(department);
+            return _unitOfWork.SaveChanges();
         }
 
         public bool DeleteDepartment(int id)
         {
-            var Department = _departmentRepository.GetById(id);
+            var Department = _unitOfWork.DepartmentRepository.GetById(id);
             if (Department is null) return false;
             else
             {
-                int Result = _departmentRepository.Remove(Department);
-                return Result > 0 ? true : false;
+                _unitOfWork.DepartmentRepository.Remove(Department);
+                int Result=_unitOfWork.SaveChanges();
+                if (Result> 0) return true;
+                else return false;
             }
         }
 
         public int UpdateDepartment(UpdatedDepartmentDto departmentDto)
         {
-            return _departmentRepository.Update(departmentDto.ToEntity());
+            var department = departmentDto.ToEntity();
+            _unitOfWork.DepartmentRepository.Update(departmentDto.ToEntity());
+            return _unitOfWork.SaveChanges();
         }
     }
 }

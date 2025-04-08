@@ -24,14 +24,15 @@ namespace Demo.Presentation
             //builder.Services.AddScoped<ApplicationDbContext>();
             builder.Services.AddDbContext<ApplicationDbContext>(Options =>
             { 
-                Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")); 
-            });
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+                Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                Options.UseLazyLoadingProxies();
+            },ServiceLifetime.Scoped);
+            //builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IDepartmentService, DepartmentService>();
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
-            
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
             #endregion
             var app = builder.Build();
 

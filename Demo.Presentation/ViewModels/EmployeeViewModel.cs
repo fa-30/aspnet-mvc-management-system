@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Demo.DAL.Models.EmployeeModel;
+﻿using Demo.DAL.Models.EmployeeModel;
 using Demo.DAL.Models.Shared.Enums;
+using System.ComponentModel.DataAnnotations;
 
-namespace Demo.BLL.DTO.EmployeeDtos
+namespace Demo.Presentation.ViewModels
 {
-    public class UpdatedEmployeeDto
+    public class EmployeeViewModel
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(50, ErrorMessage = "Max length should be 50 character")]
         [MinLength(5, ErrorMessage = "Min length should be 5 characters")]
@@ -35,6 +29,7 @@ namespace Demo.BLL.DTO.EmployeeDtos
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
 
+        [Display (Name = "Department")]
         public int? DepartmentId { get; set; }
     }
 }
