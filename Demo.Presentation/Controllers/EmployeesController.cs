@@ -45,6 +45,7 @@ namespace Demo.Presentation.Controllers
                         Gender = employee.Gender,
                         EmployeeType = employee.EmployeeType,
                         DepartmentId = employee.DepartmentId,
+                        Image=employee.Image,
                     };
                     int Result = _employeeService.CreateEmployee(employeeDto);
                     if (Result > 0)
@@ -124,7 +125,8 @@ namespace Demo.Presentation.Controllers
                     IsActive = employeeViewModel.IsActive,
                     PhoneNumber = employeeViewModel.PhoneNumber,
                     Salary = employeeViewModel.Salary,
-                    DepartmentId = employeeViewModel.DepartmentId
+                    DepartmentId = employeeViewModel.DepartmentId,
+                    Image= employeeViewModel.Image,
                 };
                 var Result = _employeeService.UpdatedEmployee(employeeDto);
                 if (Result > 0)

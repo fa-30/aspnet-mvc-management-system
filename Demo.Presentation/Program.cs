@@ -6,6 +6,7 @@ using Demo.BLL.Services.classes;
 using Demo.BLL.Services.Interfaces;
 using Demo.BLL.Profiles;
 using Microsoft.AspNetCore.Mvc;
+using Demo.BLL.Services.AttachementService;
 namespace Demo.Presentation
 {
     public class Program
@@ -33,6 +34,7 @@ namespace Demo.Presentation
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
             #endregion
             var app = builder.Build();
 

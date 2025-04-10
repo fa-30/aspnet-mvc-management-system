@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Demo.BLL.DTO.EmployeeDtos;
+using Demo.BLL.Services.AttachementService;
 using Demo.BLL.Services.Interfaces;
 using Demo.DAL.Models.EmployeeModel;
 using Demo.DAL.Repositories.Interfaces;
@@ -12,7 +13,7 @@ using Demo.DAL.Repositories.Interfaces;
 
 namespace Demo.BLL.Services.classes
 {
-    public class EmployeeService(IUnitOfWork _unitOfWork, IMapper _mapper) : IEmployeeService
+    public class EmployeeService(IUnitOfWork _unitOfWork, IMapper _mapper , IAttachmentService _attachmentService) : IEmployeeService
     {
  
         public IEnumerable<EmployeeDto> GetAllEmployees(string? EmployeeSearchName)
@@ -82,15 +83,24 @@ namespace Demo.BLL.Services.classes
 
         public int CreateEmployee(CreatedEmployeeDto employeeDto)
         {
-            var employee = _mapper.Map<CreatedEmployeeDto, Employee>(source: employeeDto);
-             _unitOfWork.EmployeeRepository.Add(employee);
+            var employee = _mapper.Map<Employee>(source: employeeDto);
+            if (employeeDto.Image is not null)
+            {
+                employee.ImageName = _attachmentService.Upload(file: employeeDto.Image, FolderName: "Images");
+            }
+            _unitOfWork.EmployeeRepository.Add(employee);
              return _unitOfWork.SaveChanges();  
         }
 
     
         public int UpdatedEmployee(UpdatedEmployeeDto employeeDto)
         {
-            _unitOfWork.EmployeeRepository.Update(entity: _mapper.Map<UpdatedEmployeeDto, Employee>( employeeDto));
+            var employee = _mapper.Map<UpdatedEmployeeDto, Employee>(employeeDto);
+            if (employeeDto.Image is not null)
+            {
+                employee.ImageName = _attachmentService.Upload(file: employeeDto.Image, FolderName: "Images");
+            }
+            _unitOfWork.EmployeeRepository.Update(employee);
             return _unitOfWork.SaveChanges();
         }
 
