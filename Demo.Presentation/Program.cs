@@ -6,6 +6,9 @@ using Demo.BLL.Services.classes;
 using Demo.BLL.Services.Interfaces;
 using Demo.BLL.Profiles;
 using Microsoft.AspNetCore.Mvc;
+using Demo.BLL.Services.AttachementService;
+using Microsoft.AspNetCore.Identity;
+using Demo.DAL.Models.IdentityModels;
 namespace Demo.Presentation
 {
     public class Program
@@ -33,6 +36,10 @@ namespace Demo.Presentation
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+            builder.Services.AddScoped<IAttachmentService, AttachmentService>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+            
             #endregion
             var app = builder.Build();
 
@@ -52,7 +59,7 @@ namespace Demo.Presentation
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Account}/{action=Register}/{id?}");
             #endregion
             app.Run();
         }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Demo.DAL.Models.EmployeeModel;
 using Demo.DAL.Models.Shared.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace Demo.BLL.DTO.EmployeeDtos
 {
@@ -35,5 +36,7 @@ namespace Demo.BLL.DTO.EmployeeDtos
         public EmployeeType EmployeeType { get; set; }
 
         public int? DepartmentId { get; set; }
+
+        public IFormFile? Image { get; set; }
     }
 }
