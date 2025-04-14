@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Demo.Presentation.ViewModels.DepartmentViewModel
+namespace Demo.Presentation.ViewModels
 {
     public class RegisterViewModel
     {
-        [Required(ErrorMessage ="Frist Name Can Not Be Null")]
+        [Required(ErrorMessage = "Frist Name Can Not Be Null")]
         [MaxLength(50)]
         public string FirstName { get; set; }
         [Required]

@@ -8,11 +8,13 @@ using Microsoft.Extensions.Hosting;
 using Demo.BLL.DTO.DepartmentDtos;
 using Demo.Presentation.ViewModels.DepartmentViewModel;
 using Demo.Presentation.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Demo.Presentation.Controllers
 {
     public class EmployeesController(IEmployeeService _employeeService, ILogger<DepartmentController> _logger, IWebHostEnvironment _environment ) : Controller
     {
+        [Authorize]
         public IActionResult Index(string? EmployeeSearchName)
         {
 
