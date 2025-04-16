@@ -1,6 +1,6 @@
 ﻿using Demo.DAL.Models.IdentityModels;
 using Demo.Presentation.Utilities;
-using Demo.Presentation.ViewModels;
+using Demo.Presentation.ViewModels.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
