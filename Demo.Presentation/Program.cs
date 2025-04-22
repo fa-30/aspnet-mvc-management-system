@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Demo.BLL.Services.AttachementService;
 using Microsoft.AspNetCore.Identity;
 using Demo.DAL.Models.IdentityModels;
+using Demo.Presentation.Setting;
+using Demo.Presentation.Helpers;
 namespace Demo.Presentation
 {
     public class Program
@@ -41,7 +43,10 @@ namespace Demo.Presentation
             {
                 Options.User.RequireUniqueEmail = true;
             } ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
-            
+            builder.Services.Configure<MailSettings>(
+                builder.Configuration.GetSection("MailSettings"));
+
+            builder.Services.AddTransient<IMailServices, MailServices>();
             #endregion
             var app = builder.Build();
 

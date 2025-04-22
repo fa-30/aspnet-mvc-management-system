@@ -1,12 +1,14 @@
 ﻿using Demo.DAL.Models.IdentityModels;
+using Demo.Presentation.Helpers;
 using Demo.Presentation.Utilities;
 using Demo.Presentation.ViewModels.Auth;
+using MailKit;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Presentation.Controllers
 {
-    public class AccountController(UserManager<ApplicationUser> _userManager , SignInManager<ApplicationUser> _signInManager) : Controller
+    public class AccountController(UserManager<ApplicationUser> _userManager , SignInManager<ApplicationUser> _signInManager , IMailServices mailService) : Controller
     {
         public IActionResult Register() => View();
         [HttpPost]
@@ -86,7 +88,8 @@ namespace Demo.Presentation.Controllers
                         Subject = "Reset Password",
                         Body = ResetPasswordLink // TODO
                     };
-                    EmailSettings.SendEmail(email);
+                    //EmailSettings.SendEmail(email);
+                    mailService.Send(email);
                     return RedirectToAction(nameof(CheckYourInbox));
                 }
             }
