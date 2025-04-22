@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Demo.DAL.Models.IdentityModels;
 using Demo.Presentation.Setting;
 using Demo.Presentation.Helpers;
+using Microsoft.AspNetCore.Authentication.Google;
 namespace Demo.Presentation
 {
     public class Program
@@ -47,6 +48,15 @@ namespace Demo.Presentation
                 builder.Configuration.GetSection("MailSettings"));
 
             builder.Services.AddTransient<IMailServices, MailServices>();
+            builder.Services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = GoogleDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+            }).AddGoogle(o => { IConfiguration GoogleAuthSection = builder.Configuration.GetSection("Authentication:Google");
+                o.ClientId = GoogleAuthSection["ClientId"];
+                o.ClientSecret = GoogleAuthSection["ClientSecret"];
+            }
+            );
             #endregion
             var app = builder.Build();
 
