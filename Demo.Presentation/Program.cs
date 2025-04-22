@@ -37,8 +37,10 @@ namespace Demo.Presentation
             builder.Services.AddAutoMapper(M => M.AddProfile(new MappingProfiles()));
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
             builder.Services.AddScoped<IAttachmentService, AttachmentService>();
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Options =>
+            {
+                Options.User.RequireUniqueEmail = true;
+            } ).AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
             
             #endregion
             var app = builder.Build();
@@ -56,6 +58,8 @@ namespace Demo.Presentation
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
