@@ -3,7 +3,7 @@
 ## Overview
 ASP.NET MVC application demonstrating server-side rendering,
 form handling, validation, and database integration using Entity Framework.
-
+ 
 ## Tech Stack
 - ASP.NET MVC
 - Entity Framework
